@@ -1,6 +1,6 @@
 import { Kafka } from "kafkajs"
 
 export const kafka = new Kafka({
-  clientId: 'gateway-service',
+  clientId: 'intent-service',
   brokers: ['localhost:9092'],
 })
