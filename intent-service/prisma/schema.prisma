@@ -11,3 +11,9 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+model Intent {
+  id              String @id @default(uuid())
+  queryId         String @unique
+  intent          String
+  createdAt       DateTime @default(now())
+}

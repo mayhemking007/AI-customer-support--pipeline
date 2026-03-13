@@ -1,9 +1,11 @@
-import express from "express";
-
-const app = express();
+import { startConsumer } from "./kafka/consumer.js";
+import { startProducer } from "./kafka/producer.js";
 
 
 const main = async () => {
-    app.listen(4000, () => console.log("Server has started on port 4000"))
+    await startConsumer();
+    await startProducer();
+
+    console.log("Intent service started....");
 }
 main()
