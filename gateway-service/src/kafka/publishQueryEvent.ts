@@ -1,11 +1,12 @@
 import { producer } from "./producer.js";
+import {TOPICS} from "./topics.js"
 
 export const publishQueryEvent = async(event : any) => {
     await producer.send({
-        topic : 'user_queries',
+        topic : TOPICS.USER_QUERIES,
         messages : [
             {
-                key : event.requestId,
+                key : event.id,
                 value : JSON.stringify(event)
             }
         ]
