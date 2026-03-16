@@ -8,7 +8,13 @@ export const saveIntent = async (event : any, intent : any) => {
                 intent : intent
             }
         });
-        return intentItem;
+        return {
+            id : intentItem.id,
+            queryId : intentItem.queryId,
+            intent : intentItem.intent,
+            createAt : intentItem.createdAt,
+            query : event.query
+        };
     }
     catch(e){
         console.log(e);

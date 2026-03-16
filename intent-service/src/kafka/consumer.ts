@@ -13,7 +13,7 @@ export const startConsumer = async () => {
         fromBeginning: false
     });
 
-    console.log("Intent service is consumer started - listning to user_queries");
+    console.log("Intent service consumer started - listning to user_queries");
 
     await consumer.run({
         eachMessage : async ({message}) => {

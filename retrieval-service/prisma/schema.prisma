@@ -11,3 +11,35 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Document{
+  id              String @id @default(uuid())
+  filename        String 
+  path            String
+  status          DocumentStatus @default(PROCESSING)
+  totalChunks     Int @default(0)
+  processedChunks Int @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  chunks          Chunk[] @relation("document-chunk")
+}
+enum DocumentStatus {
+  PROCESSING
+  ACTIVE
+  INACTIVE
+  FAILED
+}
+
+model Chunk {
+  id             String @id @default(uuid())
+  content        String
+  documentId     String 
+  embedding      Unsupported("vector(1536)")?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  document       Document @relation("document-chunk", fields: [documentId], references: [id])
+  
+  @@index([documentId])
+}
