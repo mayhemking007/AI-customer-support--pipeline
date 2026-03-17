@@ -1,7 +1,13 @@
 import express from "express";
 import { startConsumer } from "./kafka/consumer.js";
 import { startProducer } from "./kafka/producer.js";
+import { documentRouter } from "./routes/document.js";
 const app = express();
+
+app.use(express.json());
+
+app.use('/document', documentRouter)
+
 
 const main = async() => {
     await startConsumer();
