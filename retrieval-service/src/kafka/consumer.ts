@@ -1,3 +1,4 @@
+import { messageHandler } from "../services/messageHandler.js";
 import { kafka } from "./kafkaClient.js";
 import { TOPICS } from "./topics.js";
 
@@ -16,9 +17,10 @@ export const startConsumer = async() => {
         eachMessage : async({message}) => {
             const value = message.value?.toString();
             if(!value) return;
+            console.log(value);
             const event = JSON.parse(value);
-            console.log(`Message received - ${event}`);
-            
+            console.log(`Message received - ${event.intent}`);
+            messageHandler(event);
         }
     })
 }
