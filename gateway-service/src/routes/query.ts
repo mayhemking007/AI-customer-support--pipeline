@@ -29,3 +29,27 @@ queryRouter.post('/', async(req, res) => {
         })
     }
 });
+
+queryRouter.get('/', async(req, res) => {
+    const queryId = req.body.queryId;
+    try{
+        const response = await prisma.response.findFirst({
+            where : {queryId : queryId}
+        });
+        if(response){
+            res.json({
+                success : true,
+                data : {
+                    answer : response.answer
+                }
+            })
+        }
+    }
+    catch(e){
+        console.log(e);
+        res.status(500).json({
+            success : false,
+            error : "Internal Server Error. Cannot fetch the results."
+        })
+    }
+})

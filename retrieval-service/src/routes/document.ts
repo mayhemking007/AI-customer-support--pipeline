@@ -79,3 +79,29 @@ documentRouter.post('/',  async(req, res) => {
         })
     }
 });
+
+documentRouter.delete('/', async(req, res) => {
+    const docId = req.body.documentId;
+    if(!docId){
+        throw new Error("Please select a valid document");
+    }
+    try{
+        await prisma.document.update({
+            where : {id : docId},
+            data : {status : "INACTIVE"}
+        });
+        res.json({
+            success : true,
+            data : {
+                message : "Document Deleted successfully!"
+            }
+        })
+    }
+    catch(e){
+        console.log(e);
+        res.status(500).json({
+            success : false,
+            error : "Internal Server Error. Cannot delete the document."
+        })
+    }
+});

@@ -33,7 +33,6 @@ model Response{
   id              String @id @default(uuid())
   answer          String
   queryId         String  @unique
-  confidence      Float
   createdAt       DateTime @default(now())
   updateAt        DateTime @updatedAt
 

@@ -15,7 +15,7 @@ export const messageHandler = async (event : any) => {
         const context = TopChunks ? TopChunks.map((chunk : any, index : number) => (
             `context : ${index} - \n${chunk.content}`
         )).join("\n\n") : [];
-        const finalContext = `Intent: ${intent} \n Contexts: \n${context}`;
+        const finalContext = `Intent: ${intent} \nQuestion: ${query} \nContexts: \n${context}`;
         const data = {
             context : finalContext,
             queryId : event.queryId
