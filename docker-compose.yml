@@ -34,11 +34,46 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     volumes:
       - kafka_data:/var/lib/kafka/data
+
+  gateway-service:
+    build: ./gateway-service
+    env_file:
+      - ./gateway-service/.env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - kafka
+      - postgres
+
+  intent-service:
+    build: ./intent-service
+    env_file:
+      - ./intent-service/.env
+    depends_on:
+      - kafka
+      - postgres
+
+  retrieval-service:
+    build: ./retrieval-service
+    env_file:
+      - ./retrieval-service/.env
+    ports:
+      - "4000:4000"
+    depends_on:
+      - kafka
+      - postgres
+
+  answer-service:
+    build: ./answer-generation-service
+    env_file:
+      - ./answer-generation-service/.env
+    depends_on:
+      - kafka
 
 volumes:
   postgres_data:
